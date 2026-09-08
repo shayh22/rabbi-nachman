@@ -2,7 +2,7 @@ name: Deploy to GitHub Pages
 
 on:
   push:
-    branches: [main, master]
+    branches: [main, master, claude/rabbi-nachman-songs-site-ex4750]
   workflow_dispatch:
 
 permissions:
