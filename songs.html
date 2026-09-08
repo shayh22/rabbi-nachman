@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>שירים וקליפים · רבי נחמן מאומן</title>
+<meta name="description" content="כל השירים והקליפים של רבי נחמן — נגן, חיפוש וסינון לפי קטגוריה.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🕯️</text></svg>">
+<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;600;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body data-page="songs">
+<header class="topbar">
+  <div class="topbar-inner">
+    <a class="brand" href="index.html">
+      <span class="mark">נ נח</span>
+      <span>רבי נחמן מאומן</span>
+    </a>
+    <nav class="mainnav">
+      <a data-nav="home" href="index.html">בית</a>
+      <a data-nav="songs" href="songs.html">שירים וקליפים</a>
+      <a data-nav="route" href="route.html">הדרך לאומן</a>
+      <a data-nav="guide" href="guide.html">מדריך הנוסע</a>
+      <a data-nav="checklist" href="checklist.html">צ׳ק ליסט</a>
+      <a data-nav="add" href="add.html">הוספת שיר</a>
+    </nav>
+  </div>
+</header>
+
+<div class="wrap">
+  <section class="hero" style="padding:44px 0 18px">
+    <div class="eyebrow">אוסף הניגונים</div>
+    <h1 style="font-size:clamp(30px,5vw,46px)">שירים וקליפים</h1>
+    <p class="lead">כל מה שפרסמתי ביוטיוב, במקום אחד. לחיצה על שיר פותחת אותו כאן — בלי לצאת מהאתר.</p>
+  </section>
+
+  <div class="toolbar">
+    <input class="search" id="song-search" type="search" placeholder="חיפוש לפי שם שיר, מבצע או מילים…" aria-label="חיפוש שירים">
+    <div class="chips" id="cat-chips"></div>
+  </div>
+  <p style="color:var(--muted);margin:0 0 16px" id="songs-count"></p>
+
+  <div class="grid cols-3" id="songs-grid"></div>
+  <div class="empty" id="songs-empty" style="display:none"></div>
+
+  <div class="note" style="margin-top:34px">
+    <strong>איך מוסיפים שיר?</strong> נכנסים לעמוד <a href="add.html">הוספת שיר</a>, מדביקים את הקישור מיוטיוב,
+    ומעתיקים את הקוד שמתקבל אל תוך הקובץ <code>data/songs.js</code>. אפשר גם פשוט לשלוח לי את הלינקים ואוסיף אותם.
+  </div>
+</div>
+<footer class="site">
+  <div class="wrap">
+    <div class="na-nach">נ נח נחמ נחמן מאומן</div>
+    <p>האתר נבנה מאהבה לרבינו ולחסידים שעולים אליו בכל שנה.<br>
+      כל הפרטים המעשיים — מסלולים, גבולות, מחירים וזמנים — משתנים משנה לשנה ואף מיום ליום.
+      חובה לוודא מול המארגנים, הנהגים והרשויות לפני היציאה לדרך.</p>
+    <p style="margin-top:14px">© <span id="year"></span> · נסיעה טובה ובשורות טובות</p>
+  </div>
+</footer>
+
+<div class="player" id="player">
+  <div class="player-inner">
+    <div class="player-frame" id="player-frame"></div>
+    <div class="player-bar">
+      <h3 id="player-title"></h3>
+      <a class="btn" id="player-link" target="_blank" rel="noopener">פתח ביוטיוב ↗</a>
+      <button class="close-x" id="player-close" aria-label="סגור">✕</button>
+    </div>
+    <div id="player-info" style="color:var(--muted);margin-top:8px"></div>
+  </div>
+</div>
+
+<script src="data/songs.js"></script>
+<script src="assets/js/site.js"></script>
+<script src="assets/js/songs.js"></script>
+</body>
+</html>

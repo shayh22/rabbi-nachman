@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>הדרך לאומן · מסלולים דרך אירופה</title>
+<meta name="description" content="ארבעה מסלולי נסיעה לאומן דרך פולין, מולדובה, רומניה והונגריה — תחנות, מעברי גבול, זמני נסיעה וקברי צדיקים.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🕯️</text></svg>">
+<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;600;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body data-page="route">
+<header class="topbar">
+  <div class="topbar-inner">
+    <a class="brand" href="index.html">
+      <span class="mark">נ נח</span>
+      <span>רבי נחמן מאומן</span>
+    </a>
+    <nav class="mainnav">
+      <a data-nav="home" href="index.html">בית</a>
+      <a data-nav="songs" href="songs.html">שירים וקליפים</a>
+      <a data-nav="route" href="route.html">הדרך לאומן</a>
+      <a data-nav="guide" href="guide.html">מדריך הנוסע</a>
+      <a data-nav="checklist" href="checklist.html">צ׳ק ליסט</a>
+      <a data-nav="add" href="add.html">הוספת שיר</a>
+    </nav>
+  </div>
+</header>
+
+<div class="wrap">
+  <section class="hero" style="padding:44px 0 18px">
+    <div class="eyebrow">מאירופה מזרחה</div>
+    <h1 style="font-size:clamp(30px,5vw,46px)">הדרך העקלקלה לאומן</h1>
+    <p class="lead">
+      השמיים של אוקראינה סגורים, ולכן כל הדרכים עוברות ביבשה. אלה ארבעת המסלולים המרכזיים —
+      עם התחנות, מעברי הגבול, זמני הנסיעה והציונים שאפשר לפקוד בדרך.
+    </p>
+  </section>
+
+  <div class="note warn">
+    <strong>לפני הכול:</strong> אוקראינה במצב מלחמה. מעברי גבול נפתחים ונסגרים, זמני המתנה משתנים,
+    וכבישים משתנים לפי המצב. כל מה שכתוב כאן הוא תמונת מצב כללית — לוודא מול המארגן והנהג ביום היציאה.
+  </div>
+
+  <section class="block" style="padding-top:26px">
+    <div class="section-head">
+      <h2>ארבעת המסלולים</h2>
+      <p>לחיצה על מסלול פותחת את כל הפרטים</p>
+    </div>
+    <div class="route-legs" id="routes"></div>
+  </section>
+
+  <section class="block">
+    <div class="section-head">
+      <h2>איך בוחרים מסלול</h2>
+      <p>לא תמיד הזול ביותר הוא הנכון ביותר</p>
+    </div>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>אם…</th><th>המסלול המתאים</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>רוצה כמה שפחות שעות באוטובוס</td><td>קישינב (מולדובה) — הקצר ביותר יבשתית</td></tr>
+          <tr><td>רוצה לפקוד קברי צדיקים בדרך</td><td>פולין — ליז׳ענסק, קרקוב, לובלין, ברדיצ׳וב</td></tr>
+          <tr><td>הכי הרבה הסעות מאורגנות וטיסות</td><td>ורשה / ז׳שוב</td></tr>
+          <tr><td>הגבול הפולני מדווח כעמוס מאוד</td><td>רומניה דרך סירת, או מולדובה</td></tr>
+          <tr><td>מצאת טיסה זולה למרכז אירופה</td><td>בודפשט / וינה — אבל היזהר מהנסיעה הארוכה</td></tr>
+          <tr><td>נוסע עם ילדים או מבוגרים</td><td>קישינב — פחות שעות דרך, פחות שחיקה</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="block">
+    <div class="section-head">
+      <h2>ציונים באוקראינה עצמה</h2>
+      <p>לפני אומן, אחרי אומן, או בדרך החוצה</p>
+    </div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>הצדיק</th><th>המקום</th><th>הערה</th></tr></thead>
+        <tbody id="kivrei-body"></tbody>
+      </table>
+    </div>
+    <div class="note">
+      חלק מהאזורים באוקראינה סגורים או מסוכנים. לפני שיוצאים לציון מחוץ לאומן —
+      לברר מול נהג מקומי מוכר ולא לנסוע לבד.
+    </div>
+  </section>
+
+  <section class="block">
+    <div class="section-head"><h2>שלבי הנסיעה — מבט מלמעלה</h2></div>
+    <div class="grid cols-4">
+      <div class="card"><span class="pill">1</span><h3 style="margin-top:10px">טיסה לאירופה</h3><p>לעיר הזינוק שבחרת. להגיע יום לפני היציאה היבשתית — טיסה שמתעכבת לא מחכה לאוטובוס.</p></div>
+      <div class="card"><span class="pill">2</span><h3 style="margin-top:10px">אוטובוס לגבול</h3><p>מנקודת האיסוף עד מעבר הגבול. כאן מסדרים אוכל, מים ומטען לפני שנכנסים לתור.</p></div>
+      <div class="card"><span class="pill">3</span><h3 style="margin-top:10px">מעבר הגבול</h3><p>הביקורת הארוכה. דרכון ביד, סבלנות בלב, ולא לרדת מהאוטובוס בלי לומר לנהג.</p></div>
+      <div class="card"><span class="pill">4</span><h3 style="margin-top:10px">אוקראינה → אומן</h3><p>הקטע הארוך. עצירות בלבוב או בברדיצ׳וב, ואז ישר לרחוב פושקינה.</p></div>
+    </div>
+  </section>
+</div>
+<footer class="site">
+  <div class="wrap">
+    <div class="na-nach">נ נח נחמ נחמן מאומן</div>
+    <p>האתר נבנה מאהבה לרבינו ולחסידים שעולים אליו בכל שנה.<br>
+      כל הפרטים המעשיים — מסלולים, גבולות, מחירים וזמנים — משתנים משנה לשנה ואף מיום ליום.
+      חובה לוודא מול המארגנים, הנהגים והרשויות לפני היציאה לדרך.</p>
+    <p style="margin-top:14px">© <span id="year"></span> · נסיעה טובה ובשורות טובות</p>
+  </div>
+</footer>
+
+<script src="data/route.js"></script>
+<script src="assets/js/site.js"></script>
+<script src="assets/js/route.js"></script>
+</body>
+</html>
