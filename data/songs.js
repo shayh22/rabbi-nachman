@@ -19,7 +19,18 @@
 
 window.SONGS = [
 
-  /* ── כאן מוסיפים את השירים ──
+  {
+    id: "6v-84PWb9rk",
+    title: "רבינו אור אינסוף",
+    category: "ניגונים",
+    artist: "שי ShayAI",
+    year: "2025",
+    words: "",
+    lyrics: "",
+    featured: true
+  },
+
+  /* ── כאן מוסיפים עוד שירים ──
   {
     id: "XXXXXXXXXXX",
     title: "שם השיר",

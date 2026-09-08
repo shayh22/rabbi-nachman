@@ -68,8 +68,9 @@
 
     var total = (window.SONGS || []).length;
     if (count) {
+      var all = total === 1 ? "שיר אחד" : total + " שירים";
       count.textContent = total === 0 ? "" :
-        (list.length === total ? total + " שירים" : list.length + " מתוך " + total + " שירים");
+        (list.length === total ? all : list.length + " מתוך " + all);
     }
 
     if (empty) {

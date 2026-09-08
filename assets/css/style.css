@@ -658,3 +658,6 @@ ol.practice span { color: var(--muted); }
 ul.reflist { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; }
 ul.reflist a { font-size: 15.5px; }
 .eduya > .pill { align-self: flex-start; }
+
+/* רשתות השירים: auto-fill כדי ששיר בודד לא יימתח על כל הרוחב */
+#songs-grid, #featured { grid-template-columns: repeat(auto-fill, minmax(270px, 1fr)); }
