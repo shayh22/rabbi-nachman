@@ -335,6 +335,7 @@
     dock.classList.add("hidden");
     dock.classList.remove("mini", "anchored");
     document.body.classList.remove("dock-open");
+    announce();
   }
 
   /* ---------- ה-API של האתר ---------- */
@@ -359,6 +360,11 @@
     createPlayer(current, opts.startAt || 0, true, muted);
     writeState();
     markPlaying();
+    announce();
+  }
+
+  function announce() {
+    try { document.dispatchEvent(new CustomEvent("player:change")); } catch (e) {}
   }
 
   /* מדגיש את הכרטיס של השיר המתנגן */
@@ -390,6 +396,7 @@
     if (!slot) toCorner();
     createPlayer(current, st.t || 0, !!st.playing, !flag(SOUND_KEY));
     markPlaying();
+    announce();
     return true;
   }
 
