@@ -65,7 +65,7 @@
     }).join("");
   }
 
-  document.addEventListener("DOMContentLoaded", function () {
+  function initRoute() {
     renderRoutes();
     renderKivrei();
     if (location.hash) {
@@ -75,5 +75,9 @@
         el.scrollIntoView({ block: "center" });
       }
     }
-  });
+  }
+
+  window.PAGE_INIT = window.PAGE_INIT || {};
+  window.PAGE_INIT.route = initRoute;
+
 })();

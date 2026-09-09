@@ -30,7 +30,7 @@
   </div>
 </header>
 
-<div class="wrap">
+<main id="app" class="wrap">
   <section class="hero">
     <div class="eyebrow">נ נח נחמ נחמן מאומן</div>
     <h1>השירים, הקליפים<br>והדרך העקלקלה לאומן</h1>
@@ -127,7 +127,7 @@
       לפני נסיעה יש לבדוק את הנחיות משרד החוץ ואת ההנחיות של גורמי הביטחון, ולהכיר את המקלט הקרוב למקום הלינה.
     </div>
   </section>
-</div>
+</main>
 <footer class="site">
   <div class="wrap">
     <div class="na-nach">נ נח נחמ נחמן מאומן</div>
@@ -137,31 +137,18 @@
     <p style="margin-top:14px">© <span id="year"></span> · נסיעה טובה ובשורות טובות · <a href="add.html">הוספת שיר</a></p>
   </div>
 </footer>
-
-<!-- נגן -->
-<div class="player" id="player">
-  <div class="player-inner">
-    <div class="player-frame" id="player-frame"></div>
-    <div class="player-bar">
-      <h3 id="player-title"></h3>
-      <a class="btn" id="player-link" target="_blank" rel="noopener">פתח ביוטיוב ↗</a>
-      <button class="close-x" id="player-close" aria-label="סגור">✕</button>
-    </div>
-    <div id="player-info" style="color:var(--muted);margin-top:8px"></div>
-  </div>
-</div>
-
 <script src="data/songs.js"></script>
+<script src="data/route.js"></script>
+<script src="data/checklist.js"></script>
+<script src="data/yeshuot.js"></script>
 <script src="assets/js/site.js"></script>
+<script src="assets/js/miniplayer.js"></script>
+<script src="assets/js/router.js"></script>
 <script src="assets/js/songs.js"></script>
-<script>
-  document.addEventListener("DOMContentLoaded", function () {
-    initCountdown("countdown");
-    renderFeatured("featured", 3);
-    if (!(window.SONGS || []).length) {
-      document.getElementById("featured-empty").style.display = "";
-    }
-  });
-</script>
+<script src="assets/js/route.js"></script>
+<script src="assets/js/guide.js"></script>
+<script src="assets/js/checklist.js"></script>
+<script src="assets/js/yeshuot.js"></script>
+<script src="assets/js/add.js"></script>
 </body>
 </html>

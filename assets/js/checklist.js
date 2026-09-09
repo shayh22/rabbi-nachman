@@ -69,7 +69,8 @@
     updateProgress();
   }
 
-  document.addEventListener("DOMContentLoaded", function () {
+  function initChecklist() {
+    state = load();
     render();
     var reset = document.getElementById("reset-checklist");
     if (reset) {
@@ -81,5 +82,9 @@
         toast("הרשימה אופסה");
       });
     }
-  });
+  }
+
+  window.PAGE_INIT = window.PAGE_INIT || {};
+  window.PAGE_INIT.checklist = initChecklist;
+
 })();

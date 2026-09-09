@@ -72,8 +72,10 @@
     }).join("");
   }
 
-  document.addEventListener("DOMContentLoaded", function () {
+  function initAdd() {
     var cat = q("cat");
+    if (!cat) return;
+    cat.innerHTML = "";
     (window.SONG_CATEGORIES || []).forEach(function (c) {
       var o = document.createElement("option");
       o.value = c; o.textContent = c;
@@ -87,11 +89,14 @@
     cat.addEventListener("change", build);
 
     q("copy").addEventListener("click", function () {
-      var text = q("output").textContent;
-      navigator.clipboard.writeText(text).then(
+      navigator.clipboard.writeText(q("output").textContent).then(
         function () { toast("הקוד הועתק — להדביק בתוך data/songs.js"); },
         function () { toast("לא הצלחתי להעתיק — סמן ידנית"); }
       );
     });
-  });
+  }
+
+  window.PAGE_INIT = window.PAGE_INIT || {};
+  window.PAGE_INIT.add = initAdd;
+
 })();

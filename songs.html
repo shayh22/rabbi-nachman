@@ -27,7 +27,7 @@
   </div>
 </header>
 
-<div class="wrap">
+<main id="app" class="wrap">
   <section class="hero" style="padding:44px 0 18px">
     <div class="eyebrow">אוסף הניגונים</div>
     <h1 style="font-size:clamp(30px,5vw,46px)">שירים וקליפים</h1>
@@ -47,7 +47,7 @@
     <strong>איך מוסיפים שיר?</strong> נכנסים לעמוד <a href="add.html">הוספת שיר</a>, מדביקים את הקישור מיוטיוב,
     ומעתיקים את הקוד שמתקבל אל תוך הקובץ <code>data/songs.js</code>. אפשר גם פשוט לשלוח לי את הלינקים ואוסיף אותם.
   </div>
-</div>
+</main>
 <footer class="site">
   <div class="wrap">
     <div class="na-nach">נ נח נחמ נחמן מאומן</div>
@@ -57,21 +57,18 @@
     <p style="margin-top:14px">© <span id="year"></span> · נסיעה טובה ובשורות טובות · <a href="add.html">הוספת שיר</a></p>
   </div>
 </footer>
-
-<div class="player" id="player">
-  <div class="player-inner">
-    <div class="player-frame" id="player-frame"></div>
-    <div class="player-bar">
-      <h3 id="player-title"></h3>
-      <a class="btn" id="player-link" target="_blank" rel="noopener">פתח ביוטיוב ↗</a>
-      <button class="close-x" id="player-close" aria-label="סגור">✕</button>
-    </div>
-    <div id="player-info" style="color:var(--muted);margin-top:8px"></div>
-  </div>
-</div>
-
 <script src="data/songs.js"></script>
+<script src="data/route.js"></script>
+<script src="data/checklist.js"></script>
+<script src="data/yeshuot.js"></script>
 <script src="assets/js/site.js"></script>
+<script src="assets/js/miniplayer.js"></script>
+<script src="assets/js/router.js"></script>
 <script src="assets/js/songs.js"></script>
+<script src="assets/js/route.js"></script>
+<script src="assets/js/guide.js"></script>
+<script src="assets/js/checklist.js"></script>
+<script src="assets/js/yeshuot.js"></script>
+<script src="assets/js/add.js"></script>
 </body>
 </html>

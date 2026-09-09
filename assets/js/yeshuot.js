@@ -182,7 +182,7 @@
     renderMine();
   }
 
-  document.addEventListener("DOMContentLoaded", function () {
+  function initYeshuot() {
     renderPromise();
     renderPsalms();
     renderTopicChips();
@@ -192,5 +192,9 @@
     renderPractice();
     renderRefs();
     initMine();
-  });
+  }
+
+  window.PAGE_INIT = window.PAGE_INIT || {};
+  window.PAGE_INIT.yeshuot = initYeshuot;
+
 })();

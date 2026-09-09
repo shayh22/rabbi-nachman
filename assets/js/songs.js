@@ -114,57 +114,28 @@
     });
   }
 
-  /* ---- נגן ---- */
+  /* ---- פתיחת שיר: הכל עובר דרך הנגן הצף ---- */
   function openPlayer(song) {
-    var p = document.getElementById("player");
-    if (!p) return;
-    var frame = document.getElementById("player-frame");
-    var title = document.getElementById("player-title");
-    var link = document.getElementById("player-link");
-
-    frame.innerHTML =
-      '<iframe src="https://www.youtube.com/embed/' + encodeURIComponent(song.id) +
-      '?autoplay=1&rel=0" title="' + esc(song.title) +
-      '" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>';
-
-    title.textContent = song.title + (song.artist ? " · " + song.artist : "");
-    link.href = "https://www.youtube.com/watch?v=" + song.id;
-
-    var info = document.getElementById("player-info");
-    if (info) {
-      var bits = [];
-      if (song.words) bits.push("<p><strong>מקור המילים:</strong> " + esc(song.words) + "</p>");
-      if (song.lyrics) bits.push('<p style="white-space:pre-line">' + esc(song.lyrics) + "</p>");
-      info.innerHTML = bits.join("");
-    }
-
-    p.classList.add("open");
-    document.body.style.overflow = "hidden";
+    if (window.MiniPlayer) window.MiniPlayer.play(song, { expanded: true });
+    else window.open("https://www.youtube.com/watch?v=" + song.id, "_blank");
   }
 
-  function closePlayer() {
-    var p = document.getElementById("player");
-    if (!p) return;
-    p.classList.remove("open");
-    document.getElementById("player-frame").innerHTML = "";
-    document.body.style.overflow = "";
-  }
-
-  document.addEventListener("DOMContentLoaded", function () {
+  function initSongsPage() {
     buildChips();
     render();
-
     var s = document.getElementById("song-search");
     if (s) s.addEventListener("input", function () { state.q = this.value; render(); });
+  }
 
-    var p = document.getElementById("player");
-    if (p) {
-      p.addEventListener("click", function (e) { if (e.target === p) closePlayer(); });
-      var x = document.getElementById("player-close");
-      if (x) x.addEventListener("click", closePlayer);
-    }
-    document.addEventListener("keydown", function (e) { if (e.key === "Escape") closePlayer(); });
-  });
+  function initHome() {
+    window.renderFeatured("featured", 3);
+    var empty = document.getElementById("featured-empty");
+    if (empty) empty.style.display = (window.SONGS || []).length ? "none" : "";
+  }
+
+  window.PAGE_INIT = window.PAGE_INIT || {};
+  window.PAGE_INIT.songs = initSongsPage;
+  window.PAGE_INIT.home = initHome;
 
   /* מוצג גם בעמוד הבית */
   window.renderFeatured = function (containerId, limit) {

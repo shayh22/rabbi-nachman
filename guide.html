@@ -27,7 +27,7 @@
   </div>
 </header>
 
-<div class="wrap">
+<main id="app" class="wrap">
   <section class="hero" style="padding:44px 0 14px">
     <div class="eyebrow">מדריך מעשי</div>
     <h1 style="font-size:clamp(30px,5vw,46px)">מדריך הנוסע לאומן</h1>
@@ -252,7 +252,7 @@
       <a class="btn" href="route.html">🗺️ למסלולים</a>
     </div>
   </section>
-</div>
+</main>
 <footer class="site">
   <div class="wrap">
     <div class="na-nach">נ נח נחמ נחמן מאומן</div>
@@ -262,12 +262,18 @@
     <p style="margin-top:14px">© <span id="year"></span> · נסיעה טובה ובשורות טובות · <a href="add.html">הוספת שיר</a></p>
   </div>
 </footer>
-
+<script src="data/songs.js"></script>
+<script src="data/route.js"></script>
+<script src="data/checklist.js"></script>
+<script src="data/yeshuot.js"></script>
 <script src="assets/js/site.js"></script>
-<script>
-  document.querySelectorAll("#faq-list .leg-head").forEach(function (h) {
-    h.addEventListener("click", function () { h.parentElement.classList.toggle("open"); });
-  });
-</script>
+<script src="assets/js/miniplayer.js"></script>
+<script src="assets/js/router.js"></script>
+<script src="assets/js/songs.js"></script>
+<script src="assets/js/route.js"></script>
+<script src="assets/js/guide.js"></script>
+<script src="assets/js/checklist.js"></script>
+<script src="assets/js/yeshuot.js"></script>
+<script src="assets/js/add.js"></script>
 </body>
 </html>
