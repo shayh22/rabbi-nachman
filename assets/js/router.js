@@ -62,6 +62,10 @@
     document.title = parsed.title;
     window.bootPage();
 
+    /* המעבר כאן אינו טעינה מחדש, ולכן שירות הפידים לא יודע עליו לבד.
+       הכתובת והכותרת כבר עודכנו למעלה, כך שהצפייה נרשמת לעמוד הנכון. */
+    if (window.refreshFeeds) window.refreshFeeds();
+
     if (hash) {
       var el = document.querySelector(hash);
       if (el) { el.scrollIntoView(); return; }

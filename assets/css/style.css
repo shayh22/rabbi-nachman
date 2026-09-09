@@ -930,3 +930,32 @@ h1.flame-title {
 @media (prefers-reduced-motion: reduce) {
   .brand-mark, .hero-logo img { transition: none; }
 }
+
+/* ==========================================================================
+   פידים — צפיות, לייקים ותגובות
+   ========================================================================== */
+
+#feeds .feeds-row {
+  display: flex;
+  gap: 14px;
+  flex-wrap: wrap;
+  align-items: center;
+  margin-bottom: 24px;
+}
+
+/* התאמת הווידג׳ט לפלטה של האתר.
+   השירות מזריק גיליון סגנון בזמן ריצה, ולכן הוא מאוחר יותר בסדר המסמך.
+   הבורר כאן חזק ממנו (מזהה + שתי מחלקות) כדי שהצבעים שלנו ינצחו. */
+#feeds .tells-slot.tlx {
+  --tlx-fg: #f0eef7;
+  --tlx-muted: #a49fbd;
+  --tlx-card: #1c1b27;
+  --tlx-border: #2e2c3f;
+  --tlx-accent: #e0b451;
+  --tlx-accent-fg: #201a08;
+  --tlx-radius: 12px;
+  font-family: var(--font);
+}
+#feeds .tells-slot.tlx .tlx-h { color: var(--gold-soft); }
+
+#feeds .tells-comments { margin-top: 4px; }

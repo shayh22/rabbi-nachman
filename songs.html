@@ -49,6 +49,18 @@
   <div class="grid cols-3" id="songs-grid"></div>
   <div class="empty" id="songs-empty" style="display:none"></div>
 
+
+  <section class="block" id="feeds">
+    <div class="section-head">
+      <h2>מה אתם אומרים</h2>
+      <p>אפשר לסמן לב, ואפשר להשאיר מילה טובה</p>
+    </div>
+    <div class="feeds-row">
+      <div class="tells-slot" data-tells="likes" data-theme="dark"></div>
+      <div class="tells-slot" data-tells="views" data-theme="dark"></div>
+    </div>
+    <div class="tells-slot tells-comments" data-tells="comments" data-theme="dark"></div>
+  </section>
 </main>
 <footer class="site">
   <div class="wrap">
@@ -67,12 +79,14 @@
     </a>
   </div>
 </footer>
+<script src="https://web-feeds.shayh22.workers.dev/embed.js" data-site="st_d3vwN5gI0ndI" defer></script>
 <script src="data/songs.js"></script>
 <script src="data/route.js"></script>
 <script src="data/checklist.js"></script>
 <script src="data/yeshuot.js"></script>
 <script src="assets/js/site.js"></script>
 <script src="assets/js/miniplayer.js"></script>
+<script src="assets/js/feeds.js"></script>
 <script src="assets/js/router.js"></script>
 <script src="assets/js/songs.js"></script>
 <script src="assets/js/route.js"></script>
