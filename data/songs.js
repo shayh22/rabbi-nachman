@@ -82,6 +82,46 @@ window.SONGS = [
     vertical: true,   /* שורט — פרופורציה אנכית */
     featured: true
   },
+  {
+    id: "11s_KQ3TJp0",
+    title: "אומן ראש השנה שלי",
+    category: "אומן וראש השנה",
+    artist: "חיים אביטל & איציק אשל",
+    year: "",
+    words: "",
+    lyrics: "",
+    featured: true
+  },
+  {
+    id: "nWB2VRT_Jgg",
+    title: "רבי נחמן",
+    category: "ניגונים",
+    artist: "איב אנד ליר",
+    year: "",
+    words: "",
+    lyrics: "",
+    featured: true
+  },
+  {
+    id: "cgdtXVYI5WM",
+    title: "מחרוזת רבי נחמן",
+    category: "ניגונים",
+    artist: "נחמן וניסים סבג",
+    year: "",
+    words: "",
+    lyrics: "",
+    featured: true
+  },
+  {
+    id: "l3UtIKoG8I0",
+    title: "לנסוע לאומן בראש השנה? מי אמר ומה אמר",
+    category: "אומן וראש השנה",
+    artist: "חילונים לומדים יהדות באמת",
+    year: "",
+    words: "",
+    lyrics: "",
+    featured: false
+  },
 ];
 
 /* הקטגוריות שמופיעות ככפתורי סינון בעמוד השירים.
