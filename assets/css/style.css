@@ -856,3 +856,26 @@ body.dock-open { padding-bottom: 90px; }
   .credit img { width: 44px; height: 44px; }
   .credit b { font-size: 14px; }
 }
+
+/* ---------- שורטים: פרופורציה אנכית ---------- */
+
+/* רוחב המסגרת נגזר מגובה המסך, כדי ששורט לא יבלע את כל העמוד */
+.player-slot.vertical {
+  width: min(360px, calc(62vh * 0.5625));
+  max-width: 100%;
+}
+.player-slot.vertical .ps-video { aspect-ratio: 9 / 16; }
+
+.short-badge {
+  position: absolute;
+  inset-block-start: 8px;
+  inset-inline-start: 8px;
+  padding: 3px 9px;
+  border-radius: 999px;
+  background: rgba(6, 5, 10, .78);
+  color: var(--gold-soft);
+  font-size: 11.5px;
+  font-weight: 700;
+  border: 1px solid rgba(224, 180, 81, .35);
+  backdrop-filter: blur(4px);
+}

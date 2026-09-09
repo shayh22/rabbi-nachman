@@ -5,8 +5,10 @@
 (function () {
   var state = { q: "", cat: "הכל" };
 
-  function thumbUrl(id) {
-    return "https://i.ytimg.com/vi/" + id + "/hqdefault.jpg";
+  /* לשורטים יש תמונה בפרופורציה המקורית (oar), ולכן הכרטיס לא מציג פסים שחורים */
+  function thumbUrl(song) {
+    return "https://i.ytimg.com/vi/" + song.id +
+      (song.vertical ? "/oardefault.jpg" : "/hqdefault.jpg");
   }
 
   function songCard(song, index) {
@@ -23,8 +25,9 @@
 
     el.innerHTML =
       '<div class="thumb">' +
-        '<img loading="lazy" alt="' + esc(song.title) + '" src="' + thumbUrl(song.id) + '">' +
+        '<img loading="lazy" alt="' + esc(song.title) + '" src="' + thumbUrl(song) + '">' +
         '<div class="play"><span>▶</span></div>' +
+        (song.vertical ? '<span class="short-badge">שורט</span>' : "") +
       "</div>" +
       '<div class="song-body">' +
         "<h3>" + esc(song.title) + "</h3>" +

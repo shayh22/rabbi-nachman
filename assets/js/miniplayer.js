@@ -179,6 +179,13 @@
     document.body.classList.add("dock-open");
   }
 
+  /* שורט אנכי מקבל מסגרת בפרופורציה 9:16, סרטון רגיל 16:9 */
+  function applyShape() {
+    if (!slot) return;
+    slot.classList.toggle("vertical", !!(current && current.vertical));
+    requestSync();
+  }
+
   function toSlot() {
     dock.classList.add("anchored");
     dock.classList.remove("mini");
@@ -210,6 +217,7 @@
       resizeObserver.observe(el);
     }
 
+    applyShape();
     if (current) { toSlot(); dock.classList.remove("hidden"); }
   }
 
@@ -345,7 +353,7 @@
     opts = opts || {};
     buildDock();
 
-    current = { id: song.id, title: song.title, artist: song.artist, year: song.year };
+    current = { id: song.id, title: song.title, artist: song.artist, year: song.year, vertical: !!song.vertical };
     setFlag(CLOSED_KEY, false);
 
     elTitle.textContent = current.title || "";
@@ -353,6 +361,7 @@
     elResume.hidden = true;
     dock.classList.remove("hidden");
 
+    applyShape();
     if (slot) toSlot(); else toCorner();
 
     /* לחיצה של המשתמש מתירה קול; ניגון שמתחיל לבד חייב להיות מושתק */
@@ -405,6 +414,7 @@
     var el = document.getElementById("player-slot");
     if (el) attach(el);
     else detach();
+    applyShape();
     markPlaying();
     if (dock && current) { dock.classList.remove("hidden"); requestSync(); }
   }

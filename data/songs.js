@@ -40,6 +40,7 @@ window.SONGS = [
     year: "",
     words: "",
     lyrics: "",
+    vertical: true,   /* שורט — פרופורציה אנכית */
     featured: true
   },
 
@@ -51,6 +52,7 @@ window.SONGS = [
     year: "",
     words: "",
     lyrics: "",
+    vertical: true,   /* שורט — פרופורציה אנכית */
     featured: true
   },
 
@@ -69,6 +71,17 @@ window.SONGS = [
      הכי פשוט: node tools/add-song.mjs <קישור>
      השיר הראשון ברשימה הוא זה שמתנגן מעצמו בכניסה לעמוד. */
 
+  {
+    id: "2K5sqNwfW6s",
+    title: "אין ייאוש בעולם",
+    category: "ניגונים",
+    artist: "קדושיר",
+    year: "",
+    words: "",
+    lyrics: "",
+    vertical: true,   /* שורט — פרופורציה אנכית */
+    featured: true
+  },
 ];
 
 /* הקטגוריות שמופיעות ככפתורי סינון בעמוד השירים.
