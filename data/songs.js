@@ -112,16 +112,6 @@ window.SONGS = [
     lyrics: "",
     featured: true
   },
-  {
-    id: "l3UtIKoG8I0",
-    title: "לנסוע לאומן בראש השנה? מי אמר ומה אמר",
-    category: "אומן וראש השנה",
-    artist: "חילונים לומדים יהדות באמת",
-    year: "",
-    words: "",
-    lyrics: "",
-    featured: false
-  },
 ];
 
 /* הקטגוריות שמופיעות ככפתורי סינון בעמוד השירים.

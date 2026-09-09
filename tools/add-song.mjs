@@ -15,6 +15,7 @@
      --year "2025"          שנה. ברירת מחדל: השנה הנוכחית. "" משאיר ריק
      --no-featured          לא להציג בעמוד הבית (ברירת מחדל: כן)
      --end                  להוסיף בסוף הרשימה במקום בראשה
+     --remove               להסיר את הסרטונים שברשימה מהאתר
 
    דוגמאות:
      node tools/add-song.mjs https://youtu.be/6v-84PWb9rk
@@ -40,6 +41,7 @@ function parseArgs(argv) {
     else if (a === "--year") out.year = argv[++i];
     else if (a === "--no-featured") out.featured = false;
     else if (a === "--end") out.end = true;
+    else if (a === "--remove") out.remove = true;
     else if (a.startsWith("--")) fail(`אפשרות לא מוכרת: ${a}`);
     else out.urls.push(a);
   }
@@ -154,6 +156,35 @@ if (args.title && args.urls.length > 1) fail("‎--title תקף רק כשמוס�
 let file = readFileSync(SONGS_FILE, "utf8");
 const anchor = "window.SONGS = [\n";
 if (!file.includes(anchor)) fail("לא מצאתי את window.SONGS בקובץ data/songs.js");
+
+/* ---------- הסרה ---------- */
+
+if (args.remove) {
+  const removed = [];
+  for (const url of args.urls) {
+    const id = videoId(url);
+    if (!id) { console.error(`✗ לא זיהיתי מזהה סרטון: ${url}`); continue; }
+    const re = new RegExp("\\n?\\s*\\{[^{}]*?id:\\s*\"" + id + "\"[^{}]*?\\},?\\n", "s");
+    const m = file.match(re);
+    if (!m) { console.log(`• לא נמצא באתר: ${id}`); continue; }
+    const title = (m[0].match(/title:\s*"([^"]*)"/) || [])[1] || id;
+    file = file.replace(re, "\n");
+    removed.push(title);
+  }
+  if (!removed.length) { console.log("לא הוסר דבר."); process.exit(0); }
+
+  writeFileSync(SONGS_FILE, file);
+  const after = { SONGS: null };
+  new Function("window", readFileSync(SONGS_FILE, "utf8"))(after);
+  if (!Array.isArray(after.SONGS)) fail("הקובץ נשבר — בדוק את data/songs.js");
+
+  console.log(`\n✓ הוסרו ${removed.length} · נותרו באתר: ${after.SONGS.length}`);
+  for (const t of removed) console.log(`  · ${t}`);
+  console.log("\nכעת: git add data/songs.js && git commit && git push");
+  process.exit(0);
+}
+
+/* ---------- הוספה ---------- */
 
 const added = [];
 let insert = "";
