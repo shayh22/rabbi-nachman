@@ -12,6 +12,7 @@
      --category "ניגונים"   קטגוריה לכל הקישורים שברשימה (ברירת מחדל: ניגונים)
      --title "שם"           שם ידני. תקף רק כשמוסיפים קישור אחד
      --artist "מבצע"        מבצע. ברירת מחדל: שם הערוץ מיוטיוב
+     --year "2025"          שנה. ברירת מחדל: השנה הנוכחית. "" משאיר ריק
      --no-featured          לא להציג בעמוד הבית (ברירת מחדל: כן)
      --end                  להוסיף בסוף הרשימה במקום בראשה
 
@@ -36,6 +37,7 @@ function parseArgs(argv) {
     if (a === "--category") out.category = argv[++i];
     else if (a === "--title") out.title = argv[++i];
     else if (a === "--artist") out.artist = argv[++i];
+    else if (a === "--year") out.year = argv[++i];
     else if (a === "--no-featured") out.featured = false;
     else if (a === "--end") out.end = true;
     else if (a.startsWith("--")) fail(`אפשרות לא מוכרת: ${a}`);
@@ -140,7 +142,7 @@ for (const url of args.urls) {
     title: args.title || cleanTitle(meta && meta.title) || "שיר חדש — לעדכן שם",
     category: args.category,
     artist: args.artist || (meta && meta.author) || "",
-    year: String(new Date().getFullYear()),
+    year: args.year !== undefined ? args.year : String(new Date().getFullYear()),
     featured: args.featured
   };
 

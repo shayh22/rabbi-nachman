@@ -32,18 +32,42 @@ window.SONGS = [
     featured: true
   },
 
-  /* ── כאן נוספים שירים חדשים ──
   {
-    id: "XXXXXXXXXXX",
-    title: "שם השיר",
+    id: "Ex2rcTaY4Q8",
+    title: "חוזרים מרבינו - לא לא לבד",
     category: "ניגונים",
-    artist: "",
+    artist: "אש ברסלב",
     year: "",
     words: "",
     lyrics: "",
     featured: true
   },
-  */
+
+  {
+    id: "O-HakT5dp08",
+    title: "רבנו אור אינסוף — השיר הרשמי לראש השנה באומן",
+    category: "ניגונים",
+    artist: "אש ברסלב",
+    year: "",
+    words: "",
+    lyrics: "",
+    featured: true
+  },
+
+  {
+    id: "2TGHjbc26lE",
+    title: "ותכתבנו בימי ראש השנה הזה",
+    category: "ניגונים",
+    artist: "אש ברסלב",
+    year: "",
+    words: "",
+    lyrics: "",
+    featured: true
+  },
+
+  /* ── כאן נוספים שירים חדשים ──
+     הכי פשוט: node tools/add-song.mjs <קישור>
+     השיר הראשון ברשימה הוא זה שמתנגן מעצמו בכניסה לעמוד. */
 
 ];
 
