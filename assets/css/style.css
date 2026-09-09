@@ -663,74 +663,104 @@ ul.reflist a { font-size: 15.5px; }
 #songs-grid, #featured { grid-template-columns: repeat(auto-fill, minmax(270px, 1fr)); }
 
 /* ==========================================================================
-   הנגן הצף — ממשיך לנגן בזמן מעבר בין עמודי האתר
+   הנגן — מעוגן בתוך העמוד, וצף לפינה כשהמסגרת יוצאת מהמסך
    ========================================================================== */
 
+/* המסגרת שבעמוד ששומרת מקום לנגן */
+.player-slot {
+  max-width: 760px;      /* שלא ייקח את כל המסך ויבלע את רשימת השירים */
+  margin-inline: auto;
+  background: #000;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  overflow: hidden;
+  margin-bottom: 26px;
+}
+.ps-video { aspect-ratio: 16 / 9; background: #000; }
+.ps-bar { height: 56px; background: var(--card); border-top: 1px solid var(--line); }
+
+.now-playing-label {
+  max-width: 760px;
+  margin-inline: auto;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--gold-soft);
+  font-size: 14px;
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+.now-playing-label i {
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: var(--gold);
+  animation: np-pulse 1.6s ease-in-out infinite;
+}
+@keyframes np-pulse { 0%, 100% { opacity: 1; } 50% { opacity: .25; } }
+
+/* --- הנגן עצמו --- */
 .dock { position: fixed; z-index: 120; }
 .dock.hidden { display: none; }
+.dock-panel {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+.dock-video { position: relative; background: #000; flex: 1; min-height: 0; }
+.dock-video iframe { width: 100%; height: 100%; border: 0; display: block; }
 
-.dock-backdrop { display: none; }
+/* מעוגן: יושב בדיוק על המסגרת שבעמוד */
+.dock.anchored {
+  inset: auto;          /* איפוס כל המיקומים — הצמדה נעשית ב-transform בלבד */
+  left: 0;
+  top: 0;
+  transform: translate(0, 0);
+}
+.dock.anchored .dock-panel { box-shadow: none; }
 
-/* --- מצב מוקטן: פינה תחתונה --- */
+/* צף: פינת המסך */
 .dock.mini {
   inset-block-end: 18px;
   inset-inline-start: 18px;
   width: 340px;
   max-width: calc(100vw - 24px);
+  height: auto;
+  transform: none;
 }
-.dock.mini .dock-panel {
-  background: var(--card);
-  border: 1px solid var(--line);
-  border-radius: var(--radius);
-  box-shadow: 0 18px 40px rgba(0, 0, 0, .55);
-  overflow: hidden;
-}
-.dock.mini .dock-video { aspect-ratio: 16 / 9; background: #000; position: relative; }
+.dock.mini .dock-panel { box-shadow: 0 18px 40px rgba(0, 0, 0, .55); }
+.dock.mini .dock-video { aspect-ratio: 16 / 9; flex: none; }
 
-/* --- מצב מורחב: מרכז המסך --- */
-.dock.expanded { inset: 0; display: flex; align-items: center; justify-content: center; padding: 20px; }
-.dock.expanded .dock-backdrop {
-  display: block;
+.dock-resume, .dock-sound {
   position: absolute;
-  inset: 0;
-  background: rgba(6, 5, 10, .9);
-  backdrop-filter: blur(6px);
-}
-.dock.expanded .dock-panel { position: relative; width: min(1000px, 100%); }
-.dock.expanded .dock-video {
-  aspect-ratio: 16 / 9;
-  background: #000;
-  border-radius: var(--radius);
-  overflow: hidden;
-  box-shadow: var(--shadow);
-  position: relative;
-}
-.dock.expanded .dock-bar { margin-top: 12px; background: transparent; border: 0; padding: 0 4px; }
-.dock.expanded .dock-title { font-size: 19px; }
-
-.dock-video iframe { width: 100%; height: 100%; border: 0; display: block; }
-
-.dock-resume {
-  position: absolute;
-  inset: 0;
-  margin: auto;
-  width: max-content; height: max-content;
-  padding: 12px 22px;
   border: 0;
   border-radius: 999px;
   background: var(--gold);
   color: #201a08;
   font-family: var(--font);
   font-weight: 800;
-  font-size: 15px;
   cursor: pointer;
   box-shadow: 0 6px 20px rgba(0, 0, 0, .5);
-  animation: dock-pulse 1.8s ease-in-out infinite;
 }
-@keyframes dock-pulse {
-  0%, 100% { transform: scale(1); }
-  50% { transform: scale(1.06); }
+.dock-resume {
+  inset: 0;
+  margin: auto;
+  width: max-content; height: max-content;
+  padding: 12px 22px;
+  font-size: 15px;
+  animation: dock-pulse 1.8s ease-in-out 6;
 }
+.dock-sound {
+  inset-block-end: 12px;
+  inset-inline-end: 12px;
+  padding: 9px 16px;
+  font-size: 14px;
+  animation: dock-pulse 2.4s ease-in-out 6;
+}
+@keyframes dock-pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.05); } }
 
 .dock-bar {
   display: flex;
@@ -738,6 +768,8 @@ ul.reflist a { font-size: 15.5px; }
   gap: 8px;
   padding: 10px 12px;
   background: var(--card);
+  flex: none;
+  height: 56px;
 }
 .dock-controls, .dock-actions { display: flex; gap: 2px; flex: none; }
 .dock-btn {
@@ -759,24 +791,23 @@ ul.reflist a { font-size: 15.5px; }
   display: block;
   font-size: 14.5px;
   font-weight: 700;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
 }
 .dock-artist {
   display: block;
   font-size: 12.5px;
   color: var(--muted);
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
 }
 
-/* בזמן טעינת עמוד — רמז ויזואלי עדין */
+/* הכרטיס של השיר שמתנגן כרגע */
+.song.playing { border-color: var(--gold); box-shadow: 0 0 0 1px var(--gold) inset; }
+.song.playing .thumb .play span { background: var(--green); }
+
+/* בזמן מעבר עמוד — רמז ויזואלי עדין */
 .nav-busy #app { opacity: .55; transition: opacity .12s ease; }
 
 @media (max-width: 640px) {
-  /* במובייל הנגן המוקטן הוא שורה צרה בתחתית — לא לוקח חצי מסך */
   .dock.mini {
     inset-block-end: 0;
     inset-inline-start: 0;
@@ -784,18 +815,44 @@ ul.reflist a { font-size: 15.5px; }
     max-width: none;
   }
   .dock.mini .dock-panel {
-    display: flex;
+    flex-direction: row;
     align-items: center;
     border-radius: var(--radius) var(--radius) 0 0;
     border-bottom: 0;
   }
   .dock.mini .dock-video { width: 116px; height: 66px; flex: none; aspect-ratio: auto; }
   .dock.mini .dock-bar { flex: 1; min-width: 0; padding: 8px 10px; }
-  .dock.mini .dock-btn { padding: 8px 6px; }
-  .dock.mini .dock-resume { padding: 7px 10px; font-size: 12px; }
-  .dock.expanded { padding: 12px; }
+  .dock.mini .dock-sound { inset-block-end: 6px; inset-inline-end: 6px; padding: 5px 9px; font-size: 11px; }
+  .dock.mini .dock-resume { padding: 7px 12px; font-size: 12px; }
 }
 
-/* מקום לנגן הצף כדי שלא יכסה את סוף העמוד */
-body.dock-open { padding-bottom: 70px; }
-@media (max-width: 640px) { body.dock-open { padding-bottom: 90px; } }
+/* כשהנגן צף בפינה — שומרים מקום שלא יכסה את סוף העמוד */
+body.dock-open { padding-bottom: 90px; }
+@media (max-width: 640px) { body.dock-open { padding-bottom: 96px; } }
+
+/* ---------- קרדיט יוצר האתר ---------- */
+.credit {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 22px;
+  padding: 12px 20px 12px 14px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: var(--card);
+  color: var(--text);
+  text-align: start;
+  transition: border-color .15s ease, background .15s ease;
+}
+.credit:hover { text-decoration: none; border-color: var(--gold); background: var(--card-hover); }
+.credit img { width: 52px; height: 52px; border-radius: 50%; flex: none; background: #fff; }
+.credit > span { display: flex; flex-direction: column; line-height: 1.45; }
+.credit b { font-size: 15px; font-weight: 700; }
+.credit em { font-style: normal; font-size: 13.5px; color: var(--muted); }
+.credit .credit-url { font-size: 13px; color: var(--gold-soft); direction: ltr; text-align: right; }
+
+@media (max-width: 480px) {
+  .credit { padding: 10px 14px; gap: 10px; }
+  .credit img { width: 44px; height: 44px; }
+  .credit b { font-size: 14px; }
+}

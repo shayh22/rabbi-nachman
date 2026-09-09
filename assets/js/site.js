@@ -85,6 +85,9 @@ function bootPage() {
     try { init(); }
     catch (e) { if (window.console) console.error("שגיאה בהפעלת העמוד " + page, e); }
   }
+
+  /* הנגן יושב מחוץ לתוכן העמוד — כאן הוא מתחבר למסגרת של העמוד החדש */
+  if (window.MiniPlayer) window.MiniPlayer.mount();
 }
 
 window.bootPage = bootPage;

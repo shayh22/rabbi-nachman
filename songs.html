@@ -31,8 +31,14 @@
   <section class="hero" style="padding:44px 0 18px">
     <div class="eyebrow">אוסף הניגונים</div>
     <h1 style="font-size:clamp(30px,5vw,46px)">שירים וקליפים</h1>
-    <p class="lead">כל מה שפרסמתי ביוטיוב, במקום אחד. לחיצה על שיר פותחת אותו כאן — בלי לצאת מהאתר.</p>
+    <p class="lead">כל מה שפרסמתי ביוטיוב, במקום אחד. השיר מתחיל להתנגן מעצמו כאן בעמוד — לחיצה על "הפעל קול" פותחת את הצליל, ולחיצה על שיר ברשימה מחליפה את מה שמתנגן.</p>
   </section>
+
+  <div class="now-playing-label"><i></i> מתנגן עכשיו</div>
+  <div class="player-slot" id="player-slot" aria-label="נגן השירים">
+    <div class="ps-video"></div>
+    <div class="ps-bar"></div>
+  </div>
 
   <div class="toolbar">
     <input class="search" id="song-search" type="search" placeholder="חיפוש לפי שם שיר, מבצע או מילים…" aria-label="חיפוש שירים">
@@ -51,6 +57,14 @@
       כל הפרטים המעשיים — מסלולים, גבולות, מחירים וזמנים — משתנים משנה לשנה ואף מיום ליום.
       חובה לוודא מול המארגנים, הנהגים והרשויות לפני היציאה לדרך.</p>
     <p style="margin-top:14px">© <span id="year"></span> · נסיעה טובה ובשורות טובות</p>
+    <a class="credit" href="https://www.birkat-anasi.co.il" target="_blank" rel="noopener">
+      <img src="assets/img/birkat-anasi-logo.png" alt="ברכת הנשיא" width="52" height="52" loading="lazy">
+      <span>
+        <b>האתר נוצר ע״י ברכת הנשיא</b>
+        <em>אפליקציות ופתרונות AI לעסקים</em>
+        <span class="credit-url">www.birkat-anasi.co.il</span>
+      </span>
+    </a>
   </div>
 </footer>
 <script src="data/songs.js"></script>

@@ -15,6 +15,7 @@
     el.setAttribute("role", "button");
     el.setAttribute("tabindex", "0");
     el.dataset.index = index;
+    el.dataset.songId = song.id;
 
     var meta = [];
     if (song.artist) meta.push(song.artist);
@@ -112,10 +113,16 @@
     });
   }
 
-  /* ---- פתיחת שיר: הכל עובר דרך הנגן הצף ---- */
+  /* ---- בחירת שיר: מתנגן במסגרת שבתוך העמוד, בלי מודל ובלי פופאפ ---- */
   function openPlayer(song) {
-    if (window.MiniPlayer) window.MiniPlayer.play(song, { expanded: true });
-    else window.open("https://www.youtube.com/watch?v=" + song.id, "_blank");
+    if (!window.MiniPlayer) {
+      window.open("https://www.youtube.com/watch?v=" + song.id, "_blank");
+      return;
+    }
+    /* לחיצה היא מגע של המשתמש, ולכן מותר להתחיל עם קול */
+    window.MiniPlayer.play(song, { muted: false });
+    var slot = document.getElementById("player-slot");
+    if (slot) slot.scrollIntoView({ block: "center", behavior: "smooth" });
   }
 
   function initSongsPage() {
