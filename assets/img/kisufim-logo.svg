@@ -1,0 +1,48 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 350" role="img" aria-label="כיסופים לרבינו">
+  <title>כיסופים לרבינו</title>
+  <defs>
+    <linearGradient id="kf-flame" x1="0" y1="1" x2="0" y2="0">
+      <stop offset="0%"   stop-color="#A82508"/>
+      <stop offset="30%"  stop-color="#DC5C0A"/>
+      <stop offset="62%"  stop-color="#F2941B"/>
+      <stop offset="100%" stop-color="#FFDA6B"/>
+    </linearGradient>
+    <radialGradient id="kf-core" cx="50%" cy="66%" r="58%">
+      <stop offset="0%"   stop-color="#FFF2BE"/>
+      <stop offset="48%"  stop-color="#FBC63F"/>
+      <stop offset="100%" stop-color="#E4720C"/>
+    </radialGradient>
+    <linearGradient id="kf-ribbon" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%"   stop-color="#C98C2A"/>
+      <stop offset="18%"  stop-color="#F7E3AE"/>
+      <stop offset="82%"  stop-color="#F7E3AE"/>
+      <stop offset="100%" stop-color="#C98C2A"/>
+    </linearGradient>
+  </defs>
+
+  <!-- להבה -->
+  <path d="M150 16c18 46 46 66 68 90 28 30 44 70 40 106-5 46-44 80-108 80S47 258 42 212c-4-36 12-76 40-106 22-24 50-44 68-90z"
+        fill="url(#kf-flame)"/>
+
+  <!-- ליבה בהירה -->
+  <path d="M150 74c12 32 32 46 47 63 19 21 30 49 27 74-3 32-30 55-74 55s-71-23-74-55c-3-25 8-53 27-74 15-17 35-31 47-63z"
+        fill="url(#kf-core)"/>
+
+  <!-- לשונות אש -->
+  <path d="M104 92c-14 20-22 44-18 64 3 15 11 25 11 25s-17-8-25-25c-9-20-3-48 32-64z" fill="#FFE083" opacity=".7"/>
+  <path d="M196 92c14 20 22 44 18 64-3 15-11 25-11 25s17-8 25-25c9-20 3-48-32-64z" fill="#FFE083" opacity=".7"/>
+
+  <!-- כיסופים -->
+  <text x="150" y="232" text-anchor="middle" textLength="176" lengthAdjust="spacingAndGlyphs"
+        font-family="Heebo, Assistant, Arial, sans-serif" font-weight="900" font-size="52"
+        fill="#63290A">כיסופים</text>
+
+  <!-- סרט -->
+  <path d="M14 288l30-12v52l-30-12z" fill="#B0761C"/>
+  <path d="M286 288l-30-12v52l30-12z" fill="#B0761C"/>
+  <path d="M46 276h208c7 0 12 5 12 12v20c0 7-5 12-12 12H46c-7 0-12-5-12-12v-20c0-7 5-12 12-12z"
+        fill="url(#kf-ribbon)" stroke="#B0761C" stroke-width="2.5"/>
+  <text x="150" y="305" text-anchor="middle"
+        font-family="Heebo, Assistant, Arial, sans-serif" font-weight="800" font-size="21"
+        fill="#7A4410">נ נח נחמ נחמן מאומן</text>
+</svg>

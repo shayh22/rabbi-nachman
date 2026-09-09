@@ -88,7 +88,29 @@ function bootPage() {
 
   /* הנגן יושב מחוץ לתוכן העמוד — כאן הוא מתחבר למסגרת של העמוד החדש */
   if (window.MiniPlayer) window.MiniPlayer.mount();
+  if (window.updateScrollState) window.updateScrollState();
 }
+
+/* ---- הלוגו הגדול מתכווץ אל ההדר בזמן גלילה ---- */
+(function () {
+  var ticking = false;
+
+  function apply() {
+    ticking = false;
+    var hero = document.querySelector(".hero-logo");
+    var limit = hero ? hero.getBoundingClientRect().height * 0.55 : 30;
+    document.body.classList.toggle("scrolled", window.scrollY > limit);
+  }
+
+  window.addEventListener("scroll", function () {
+    if (ticking) return;
+    ticking = true;
+    requestAnimationFrame(apply);
+  }, { passive: true });
+
+  document.addEventListener("DOMContentLoaded", apply);
+  window.updateScrollState = apply;
+})();
 
 window.bootPage = bootPage;
 document.addEventListener("DOMContentLoaded", bootPage);
