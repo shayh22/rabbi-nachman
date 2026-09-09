@@ -1,0 +1,170 @@
+#!/usr/bin/env node
+/* =========================================================================
+   tools/add-song.mjs — כלי ניהול להוספת שירים לאתר
+   -------------------------------------------------------------------------
+   כלי צד־שרת בלבד. הוא אינו חלק מהאתר ואינו נגיש לגולשים — רק מנהל האתר
+   מריץ אותו מהמחשב שלו כדי להוסיף סרטונים.
+
+   שימוש:
+     node tools/add-song.mjs <קישור> [<קישור> ...] [אפשרויות]
+
+   אפשרויות:
+     --category "ניגונים"   קטגוריה לכל הקישורים שברשימה (ברירת מחדל: ניגונים)
+     --title "שם"           שם ידני. תקף רק כשמוסיפים קישור אחד
+     --artist "מבצע"        מבצע. ברירת מחדל: שם הערוץ מיוטיוב
+     --no-featured          לא להציג בעמוד הבית (ברירת מחדל: כן)
+     --end                  להוסיף בסוף הרשימה במקום בראשה
+
+   דוגמאות:
+     node tools/add-song.mjs https://youtu.be/6v-84PWb9rk
+     node tools/add-song.mjs https://youtu.be/AAA https://youtu.be/BBB --category קליפים
+   ========================================================================= */
+
+import { readFileSync, writeFileSync } from "node:fs";
+import { fileURLToPath } from "node:url";
+import { dirname, join } from "node:path";
+
+const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
+const SONGS_FILE = join(ROOT, "data", "songs.js");
+
+/* ---------- פענוח שורת הפקודה ---------- */
+
+function parseArgs(argv) {
+  const out = { urls: [], category: "ניגונים", featured: true, end: false };
+  for (let i = 0; i < argv.length; i++) {
+    const a = argv[i];
+    if (a === "--category") out.category = argv[++i];
+    else if (a === "--title") out.title = argv[++i];
+    else if (a === "--artist") out.artist = argv[++i];
+    else if (a === "--no-featured") out.featured = false;
+    else if (a === "--end") out.end = true;
+    else if (a.startsWith("--")) fail(`אפשרות לא מוכרת: ${a}`);
+    else out.urls.push(a);
+  }
+  return out;
+}
+
+function fail(msg) {
+  console.error("✗ " + msg);
+  process.exit(1);
+}
+
+/* ---------- מזהה הסרטון ---------- */
+
+function videoId(url) {
+  const u = String(url).trim();
+  if (/^[A-Za-z0-9_-]{11}$/.test(u)) return u;
+  const pats = [
+    /[?&]v=([A-Za-z0-9_-]{11})/,
+    /youtu\.be\/([A-Za-z0-9_-]{11})/,
+    /youtube\.com\/embed\/([A-Za-z0-9_-]{11})/,
+    /youtube\.com\/shorts\/([A-Za-z0-9_-]{11})/,
+    /youtube\.com\/live\/([A-Za-z0-9_-]{11})/
+  ];
+  for (const p of pats) {
+    const m = u.match(p);
+    if (m) return m[1];
+  }
+  return null;
+}
+
+/* ---------- שליפת פרטי הסרטון ---------- */
+
+async function fetchMeta(id) {
+  const url = `https://www.youtube.com/oembed?url=${encodeURIComponent("https://youtu.be/" + id)}&format=json`;
+  try {
+    const r = await fetch(url);
+    if (!r.ok) return null;
+    const d = await r.json();
+    return { title: d.title || "", author: d.author_name || "" };
+  } catch (e) {
+    return null;
+  }
+}
+
+/* מנקה האשטגים ורווחים כפולים משם הסרטון */
+function cleanTitle(t) {
+  return String(t || "")
+    .replace(/#[^\s#]+/g, " ")
+    .replace(/\s{2,}/g, " ")
+    .replace(/[\s|·\-–—]+$/, "")
+    .trim();
+}
+
+function jsStr(s) {
+  return '"' + String(s == null ? "" : s).replace(/\\/g, "\\\\").replace(/"/g, '\\"') + '"';
+}
+
+function block(song) {
+  return [
+    "  {",
+    `    id: ${jsStr(song.id)},`,
+    `    title: ${jsStr(song.title)},`,
+    `    category: ${jsStr(song.category)},`,
+    `    artist: ${jsStr(song.artist)},`,
+    `    year: ${jsStr(song.year)},`,
+    '    words: "",',
+    '    lyrics: "",',
+    `    featured: ${song.featured}`,
+    "  },",
+    ""
+  ].join("\n");
+}
+
+/* ---------- ראשי ---------- */
+
+const args = parseArgs(process.argv.slice(2));
+if (!args.urls.length) {
+  console.log(readFileSync(fileURLToPath(import.meta.url), "utf8").split("=====")[1]);
+  process.exit(0);
+}
+if (args.title && args.urls.length > 1) fail("‎--title תקף רק כשמוסיפים קישור אחד");
+
+let file = readFileSync(SONGS_FILE, "utf8");
+const anchor = "window.SONGS = [\n";
+if (!file.includes(anchor)) fail("לא מצאתי את window.SONGS בקובץ data/songs.js");
+
+const added = [];
+let insert = "";
+
+for (const url of args.urls) {
+  const id = videoId(url);
+  if (!id) { console.error(`✗ לא זיהיתי מזהה סרטון: ${url}`); continue; }
+  if (file.includes(`id: "${id}"`)) { console.log(`• כבר קיים באתר, מדלג: ${id}`); continue; }
+
+  const meta = await fetchMeta(id);
+  if (!meta) console.error(`  (לא הצלחתי לשלוף פרטים מיוטיוב עבור ${id} — נדרש שם ידני)`);
+
+  const song = {
+    id,
+    title: args.title || cleanTitle(meta && meta.title) || "שיר חדש — לעדכן שם",
+    category: args.category,
+    artist: args.artist || (meta && meta.author) || "",
+    year: String(new Date().getFullYear()),
+    featured: args.featured
+  };
+
+  insert += block(song);
+  added.push(song);
+}
+
+if (!added.length) { console.log("לא נוסף דבר."); process.exit(0); }
+
+if (args.end) {
+  const close = file.lastIndexOf("];");
+  file = file.slice(0, close) + insert + file.slice(close);
+} else {
+  const at = file.indexOf(anchor) + anchor.length;
+  file = file.slice(0, at) + "\n" + insert + file.slice(at);
+}
+
+writeFileSync(SONGS_FILE, file);
+
+/* בדיקה שהקובץ עדיין תקין ושהשירים נטענים */
+const check = { SONGS: null };
+new Function("window", readFileSync(SONGS_FILE, "utf8"))(check);
+if (!Array.isArray(check.SONGS)) fail("הקובץ נשבר — בדוק את data/songs.js");
+
+console.log(`\n✓ נוספו ${added.length} שירים · סה״כ באתר: ${check.SONGS.length}`);
+for (const s of added) console.log(`  · ${s.title} — ${s.artist} [${s.category}]  https://youtu.be/${s.id}`);
+console.log("\nכעת: git add data/songs.js && git commit && git push");
