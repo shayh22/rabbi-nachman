@@ -151,7 +151,21 @@
     window.addEventListener("beforeunload", writeState);
   }
 
-  /* ---------- עיגון למסגרת שבעמוד ---------- */
+  /* ---------- עיגון לכרטיס השיר ----------
+     אין באתר מסגרת נגן ייעודית: הווידאו מתנגן בתוך הכרטיס של השיר
+     עצמו, במקומו ברשימה. הנגן נשאר מופע יחיד שחי מחוץ לתוכן העמוד,
+     ורק "נצמד" חזותית לכרטיס הנכון. */
+
+  function slotFor(id) {
+    var card = id && document.querySelector('.song[data-song-id="' + id + '"]');
+    return card ? card.querySelector(".thumb") : null;
+  }
+
+  function firstCardSlot() {
+    var card = document.querySelector("#songs-grid .song, #featured .song");
+    return card ? card.querySelector(".thumb") : null;
+  }
+
 
   function requestSync() {
     if (syncPending || !slot) return;
@@ -167,7 +181,7 @@
     var r = slot.getBoundingClientRect();
     dock.style.width = r.width + "px";
     dock.style.height = r.height + "px";
-    dock.style.transform = "translate(" + Math.round(r.left) + "px," + Math.round(r.top) + "px)";
+    dock.style.transform = "translate(" + r.left + "px," + r.top + "px)";
   }
 
   function toCorner() {
@@ -191,6 +205,11 @@
     dock.classList.remove("mini");
     document.body.classList.remove("dock-open");
     syncAnchor();
+
+    /* הפריסה עשויה לזוז מעט מיד אחרי המעבר (ריפוד שמוסר, תמונה שנטענת),
+       ולכן מיישרים שוב אחרי שהיא נרגעת. */
+    requestAnimationFrame(syncAnchor);
+    setTimeout(syncAnchor, 180);
   }
 
   /* מחברים את הנגן למסגרת שבעמוד. כשהמסגרת יוצאת מהמסך — הנגן עובר לפינה. */
@@ -361,6 +380,11 @@
     elResume.hidden = true;
     dock.classList.remove("hidden");
 
+    /* נצמדים לכרטיס של השיר הזה — שם הוא ינוגן, במקומו ברשימה */
+    var target = opts.slot || slotFor(current.id);
+    if (target) attach(target);
+    else { detach(); toCorner(); }
+
     applyShape();
     if (slot) toSlot(); else toCorner();
 
@@ -389,8 +413,15 @@
     if (current || flag(CLOSED_KEY)) return;
     var list = songs();
     if (!list.length) return;
-    var featured = list.filter(function (s) { return s.featured; });
-    play((featured[0] || list[0]), { muted: !flag(SOUND_KEY) });
+
+    /* מנגנים את השיר של הכרטיס שאליו הגענו, ולא שיר קבוע כלשהו */
+    var card = slot && slot.parentElement;
+    var id = card && card.dataset ? card.dataset.songId : null;
+    var song = null;
+    for (var i = 0; i < list.length && id; i++) if (list[i].id === id) song = list[i];
+    if (!song) song = list.filter(function (s) { return s.featured; })[0] || list[0];
+
+    play(song, { muted: !flag(SOUND_KEY), slot: slot });
   }
 
   /* שחזור אחרי טעינת עמוד מלאה */
@@ -411,11 +442,11 @@
 
   /* נקרא בכל טעינת עמוד ואחרי כל מעבר רך */
   function mount() {
-    var el = document.getElementById("player-slot");
+    markPlaying();
+    var el = (current && slotFor(current.id)) || firstCardSlot();
     if (el) attach(el);
     else detach();
     applyShape();
-    markPlaying();
     if (dock && current) { dock.classList.remove("hidden"); requestSync(); }
   }
 

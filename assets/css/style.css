@@ -666,37 +666,13 @@ ul.reflist a { font-size: 15.5px; }
    הנגן — מעוגן בתוך העמוד, וצף לפינה כשהמסגרת יוצאת מהמסך
    ========================================================================== */
 
-/* המסגרת שבעמוד ששומרת מקום לנגן */
-.player-slot {
-  max-width: 760px;      /* שלא ייקח את כל המסך ויבלע את רשימת השירים */
-  margin-inline: auto;
-  background: #000;
-  border: 1px solid var(--line);
-  border-radius: var(--radius);
-  overflow: hidden;
-  margin-bottom: 26px;
-}
-.ps-video { aspect-ratio: 16 / 9; background: #000; }
-.ps-bar { height: 56px; background: var(--card); border-top: 1px solid var(--line); }
-
-.now-playing-label {
-  max-width: 760px;
-  margin-inline: auto;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  color: var(--gold-soft);
-  font-size: 14px;
-  font-weight: 700;
-  margin-bottom: 10px;
-}
-.now-playing-label i {
-  width: 8px; height: 8px;
-  border-radius: 50%;
-  background: var(--gold);
-  animation: np-pulse 1.6s ease-in-out infinite;
-}
-@keyframes np-pulse { 0%, 100% { opacity: 1; } 50% { opacity: .25; } }
+/* הכרטיס של השיר הוא מסגרת הנגן: הווידאו מתנגן בתוכו, במקומו ברשימה.
+   ברשימה כל הכרטיסים באותה פרופורציה, כדי שהרשת תישאר מסודרת; רק
+   הכרטיס שמנגן שורט מתארך לפרופורציה האנכית האמיתית, שלא יהיו פסים. */
+.song .thumb { transition: aspect-ratio .25s ease; }
+.song .thumb.vertical { aspect-ratio: 9 / 16; }
+.song.playing { border-color: var(--gold); }
+.song.playing .thumb .play { display: none; }   /* כפתור ההפעלה מיותר כשמנגן */
 
 /* --- הנגן עצמו --- */
 .dock { position: fixed; z-index: 120; }
@@ -720,7 +696,9 @@ ul.reflist a { font-size: 15.5px; }
   top: 0;
   transform: translate(0, 0);
 }
-.dock.anchored .dock-panel { box-shadow: none; }
+.dock.anchored { z-index: 10; }   /* מתחת לכותרת הדביקה, שלא יעבור מעליה */
+.dock.anchored .dock-panel { box-shadow: none; border-color: var(--gold); }
+.dock.anchored .dock-bar { display: none; }
 
 /* צף: פינת המסך */
 .dock.mini {
@@ -860,12 +838,6 @@ body.dock-open { padding-bottom: 90px; }
 /* ---------- שורטים: פרופורציה אנכית ---------- */
 
 /* רוחב המסגרת נגזר מגובה המסך, כדי ששורט לא יבלע את כל העמוד */
-.player-slot.vertical {
-  width: min(360px, calc(62vh * 0.5625));
-  max-width: 100%;
-}
-.player-slot.vertical .ps-video { aspect-ratio: 9 / 16; }
-
 .short-badge {
   position: absolute;
   inset-block-start: 8px;

@@ -37,9 +37,9 @@
         "</div>" +
       "</div>";
 
-    el.addEventListener("click", function () { openPlayer(song); });
+    el.addEventListener("click", function () { openPlayer(song, el); });
     el.addEventListener("keydown", function (e) {
-      if (e.key === "Enter" || e.key === " ") { e.preventDefault(); openPlayer(song); }
+      if (e.key === "Enter" || e.key === " ") { e.preventDefault(); openPlayer(song, el); }
     });
     return el;
   }
@@ -48,11 +48,6 @@
     return String(s == null ? "" : s)
       .replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;")
       .replace(/"/g, "&quot;");
-  }
-
-  function playingId() {
-    var c = window.MiniPlayer && window.MiniPlayer.current();
-    return c ? c.id : null;
   }
 
   function filtered() {
@@ -73,9 +68,8 @@
 
     var total = (window.SONGS || []).length;
     var matching = filtered();
-    var playing = playingId();
-    /* השיר שמתנגן כבר מוצג בנגן שלמעלה — אין טעם להראות אותו שוב ברשימה */
-    var list = matching.filter(function (s) { return s.id !== playing; });
+    /* השיר המתנגן נשאר ברשימה: הכרטיס שלו הוא הנגן */
+    var list = matching;
 
     grid.innerHTML = "";
     list.forEach(function (s, i) { grid.appendChild(songCard(s, i)); });
@@ -88,18 +82,14 @@
 
     if (!empty) return;
 
+    if (window.MiniPlayer) window.MiniPlayer.mount();
+
     if (total === 0) {
       empty.style.display = "";
       empty.innerHTML = "<h3>השירים בדרך 🎵</h3><p>הניגונים והקליפים יתפרסמו כאן.</p>";
     } else if (matching.length === 0) {
       empty.style.display = "";
       empty.innerHTML = "<h3>לא נמצאו שירים</h3><p>נסה לחפש משהו אחר או לבחור קטגוריה אחרת.</p>";
-    } else if (list.length === 0) {
-      /* כל מה שמתאים לסינון הוא בדיוק השיר שמתנגן למעלה */
-      empty.style.display = "";
-      empty.innerHTML = '<p style="margin:0">☝️ ' +
-        (total === 1 ? "זה השיר היחיד באוסף כרגע, והוא מתנגן למעלה."
-                     : "השיר היחיד שמתאים לסינון הזה מתנגן למעלה.") + "</p>";
     } else {
       empty.style.display = "none";
     }
@@ -129,16 +119,20 @@
     });
   }
 
-  /* ---- בחירת שיר: מתנגן במסגרת שבתוך העמוד, בלי מודל ובלי פופאפ ---- */
-  function openPlayer(song) {
+  /* ---- בחירת שיר: מתנגן בתוך הכרטיס שלו, במקומו ברשימה ---- */
+  function openPlayer(song, card) {
     if (!window.MiniPlayer) {
       window.open("https://www.youtube.com/watch?v=" + song.id, "_blank");
       return;
     }
+    var playing = window.MiniPlayer.current();
+    if (playing && playing.id === song.id) return;   /* כבר מתנגן כאן */
+
     /* לחיצה היא מגע של המשתמש, ולכן מותר להתחיל עם קול */
-    window.MiniPlayer.play(song, { muted: false });
-    var slot = document.getElementById("player-slot");
-    if (slot) slot.scrollIntoView({ block: "center", behavior: "smooth" });
+    window.MiniPlayer.play(song, {
+      muted: false,
+      slot: card ? card.querySelector(".thumb") : null
+    });
   }
 
   function initSongsPage() {
@@ -158,12 +152,6 @@
   window.PAGE_INIT.songs = initSongsPage;
   window.PAGE_INIT.home = initHome;
 
-  /* כשמתחלף השיר בנגן — לרענן את הרשימה, כדי שהשיר המתנגן לא יופיע בה */
-  document.addEventListener("player:change", function () {
-    if (document.getElementById("songs-grid")) render();
-    if (document.getElementById("featured")) window.renderFeatured("featured", 3);
-  });
-
   /* מוצג גם בעמוד הבית */
   window.renderFeatured = function (containerId, limit) {
     var box = document.getElementById(containerId);
@@ -172,11 +160,11 @@
     var list = all.filter(function (s) { return s.featured; });
     if (!list.length) list = all.slice();
 
-    var playing = playingId();
-    list = list.filter(function (s) { return s.id !== playing; }).slice(0, limit || 3);
+    list = list.slice(0, limit || 3);
 
     box.innerHTML = "";
     list.forEach(function (s, i) { box.appendChild(songCard(s, i)); });
     box.style.display = list.length ? "" : "none";
+    if (window.MiniPlayer) window.MiniPlayer.mount();
   };
 })();
