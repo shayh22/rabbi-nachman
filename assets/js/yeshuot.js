@@ -31,17 +31,21 @@
       "</div>";
   }
 
-  /* ---- עשרת המזמורים ---- */
-  function renderPsalms() {
-    var box = document.getElementById("psalms");
-    if (!box) return;
-    box.innerHTML = (window.TIKKUN_PSALMS || []).map(function (p) {
-      return '<a class="psalm" href="https://www.sefaria.org/Psalms.' + p.n +
-        '" target="_blank" rel="noopener">' +
-        '<b>' + esc(p.he) + "</b>" +
-        '<span class="pnum">מזמור ' + p.n + "</span>" +
-        '<span class="popen">' + esc(p.open) + "</span></a>";
-    }).join("");
+  /* ---- עשרת המזמורים ----
+     המזמורים כתובים ישירות ב-HTML של העמוד ולא נוצרים כאן: כך הם
+     נקראים גם בלי JavaScript, וגם נסרקים על ידי מנועי חיפוש ומנועי AI. */
+
+  function initPsalms() {
+    var btn = document.getElementById("psalms-toggle");
+    if (!btn) return;
+    var items = document.querySelectorAll(".psalm-item");
+
+    btn.addEventListener("click", function () {
+      var opening = btn.getAttribute("data-open") !== "1";
+      items.forEach(function (d) { d.open = opening; });
+      btn.setAttribute("data-open", opening ? "1" : "0");
+      btn.textContent = opening ? "סגירת כל המזמורים" : "פתיחת כל המזמורים";
+    });
   }
 
   /* ---- עדויות ---- */
@@ -184,7 +188,7 @@
 
   function initYeshuot() {
     renderPromise();
-    renderPsalms();
+    initPsalms();
     renderTopicChips();
     renderEduyot();
     renderTimeline();

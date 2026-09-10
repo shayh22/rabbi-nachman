@@ -180,7 +180,8 @@ if (args.remove) {
 
   console.log(`\n✓ הוסרו ${removed.length} · נותרו באתר: ${after.SONGS.length}`);
   for (const t of removed) console.log(`  · ${t}`);
-  console.log("\nכעת: git add data/songs.js && git commit && git push");
+  console.log("\nכעת: node tools/prerender.mjs   (מטמיע את השינוי גם ב-HTML, לטובת מנועי חיפוש)");
+console.log("ואז: git add -A && git commit && git push");
   process.exit(0);
 }
 
@@ -234,4 +235,5 @@ if (!Array.isArray(check.SONGS)) fail("הקובץ נשבר — בדוק את dat
 
 console.log(`\n✓ נוספו ${added.length} שירים · סה״כ באתר: ${check.SONGS.length}`);
 for (const s of added) console.log(`  · ${s.title} — ${s.artist} [${s.category}]${s.vertical ? " · שורט אנכי" : ""}  https://youtu.be/${s.id}`);
-console.log("\nכעת: git add data/songs.js && git commit && git push");
+console.log("\nכעת: node tools/prerender.mjs   (מטמיע את השינוי גם ב-HTML, לטובת מנועי חיפוש)");
+console.log("ואז: git add -A && git commit && git push");
