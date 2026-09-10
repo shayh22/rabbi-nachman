@@ -219,16 +219,20 @@
     if (slotObserver) slotObserver.disconnect();
     if (resizeObserver) resizeObserver.disconnect();
 
+    /* המדד הוא כמה פיקסלים מהכרטיס נראים בפועל, ולא איזה אחוז ממנו.
+       כרטיס של שורט גבוה פי שלושה מכרטיס רגיל, ולפי אחוזים הוא היה
+       נחשב "מחוץ למסך" גם כשחציו העליון מולנו — והנגן היה קופץ לפינה. */
     slotObserver = new IntersectionObserver(function (entries) {
-      var e = entries[0];
+      var e = entries[entries.length - 1];
+      var visible = e.intersectionRect ? e.intersectionRect.height : 0;
+
       if (!current) {
-        /* עוד לא מנגן — מגיעים למסגרת, מתחילים לבד */
-        if (e.isIntersecting && e.intersectionRatio > 0.35) autostart();
+        if (e.isIntersecting && visible > 120) autostart();
         return;
       }
-      if (e.intersectionRatio > 0.25) toSlot();
+      if (visible > 120) toSlot();
       else toCorner();
-    }, { threshold: [0, 0.25, 0.35, 0.6] });
+    }, { threshold: [0, 0.05, 0.15, 0.3, 0.5, 0.75, 1] });
     slotObserver.observe(el);
 
     if (window.ResizeObserver) {

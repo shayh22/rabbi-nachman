@@ -112,6 +112,17 @@ window.SONGS = [
     lyrics: "",
     featured: true
   },
+  {
+    id: "aqqz0QkoS4k",
+    title: "רבי נחמן אמר החיים הם רק משחק",
+    category: "ניגונים",
+    artist: "שי ShayAI",
+    year: "",
+    words: "",
+    lyrics: "",
+    vertical: true,   /* שורט — פרופורציה אנכית */
+    featured: true
+  },
 ];
 
 /* הקטגוריות שמופיעות ככפתורי סינון בעמוד השירים.
