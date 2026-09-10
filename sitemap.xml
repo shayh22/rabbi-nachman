@@ -25,6 +25,12 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://shayh22.github.io/rabbi-nachman/kashrut.html</loc>
+    <lastmod>2026-09-10</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://shayh22.github.io/rabbi-nachman/guide.html</loc>
     <lastmod>2026-09-10</lastmod>
     <changefreq>monthly</changefreq>

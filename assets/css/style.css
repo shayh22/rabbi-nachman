@@ -1029,3 +1029,135 @@ h1.flame-title {
   .psalm-text { background: #fff; color: #000; }
   .psalm-item > summary { color: #000; }
 }
+
+/* =========================================================================
+   כשרות באומן
+   ========================================================================= */
+
+/* ---- העסקים שתחת השגחה ---- */
+.ksr-group h3 {
+  margin: 0 0 14px;
+  font-size: 18px;
+  display: flex;
+  align-items: center;
+  gap: 9px;
+}
+.ksr-count {
+  font-size: 12.5px;
+  font-weight: 700;
+  color: var(--gold-soft);
+  background: rgba(224, 180, 81, .13);
+  border-radius: 999px;
+  padding: 2px 9px;
+  margin-inline-start: auto;
+}
+.ksr-list { margin: 0; padding: 0; list-style: none; }
+.ksr-list li {
+  padding: 9px 0;
+  border-bottom: 1px solid var(--line);
+  font-size: 15.5px;
+  line-height: 1.6;
+}
+.ksr-list li:last-child { border-bottom: 0; }
+.ksr-list strong { color: var(--text); }
+.ksr-en { color: var(--muted); font-size: 13px; letter-spacing: .02em; }
+.ksr-by { display: block; color: var(--muted); font-size: 13.5px; margin-top: 2px; }
+
+/* ---- הנושאים ---- */
+.ksr-topic .leg-head .num {
+  font-size: 19px;
+  background: rgba(224, 180, 81, .1);
+}
+.ksr-section { margin-top: 22px; }
+.ksr-section:first-child { margin-top: 16px; }
+.ksr-section > h4 {
+  margin: 0 0 10px;
+  font-size: 17px;
+  color: var(--gold-soft);
+}
+.ksr-p { color: var(--muted); margin: 0 0 12px; line-height: 1.85; font-size: 15.5px; }
+
+.ksr-block {
+  border: 1px solid var(--line);
+  border-radius: var(--radius-sm);
+  padding: 12px 16px 6px;
+  margin-bottom: 12px;
+  background: var(--bg-soft);
+}
+.ksr-block.ok { border-color: rgba(79, 191, 139, .3); background: rgba(79, 191, 139, .05); }
+.ksr-block.no { border-color: rgba(224, 101, 95, .3); background: rgba(224, 101, 95, .05); }
+.ksr-block.check { border-color: rgba(224, 180, 81, .3); background: rgba(224, 180, 81, .05); }
+
+.ksr-block-head {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  flex-wrap: wrap;
+  margin-bottom: 8px;
+}
+.ksr-block-head b { font-size: 15.5px; color: var(--text); }
+.ksr-mark {
+  width: 22px; height: 22px;
+  flex: none;
+  border-radius: 50%;
+  display: grid; place-items: center;
+  font-size: 12px;
+  font-weight: 700;
+}
+.ksr-block.ok .ksr-mark { background: rgba(79, 191, 139, .18); color: #8fe0ba; }
+.ksr-block.no .ksr-mark { background: rgba(224, 101, 95, .18); color: #f0a5a1; }
+.ksr-block.check .ksr-mark { background: rgba(224, 180, 81, .18); color: var(--gold-soft); }
+
+.ksr-tag {
+  margin-inline-start: auto;
+  font-size: 12px;
+  letter-spacing: .02em;
+  opacity: .75;
+}
+.ksr-block.ok .ksr-tag { color: #8fe0ba; }
+.ksr-block.no .ksr-tag { color: #f0a5a1; }
+.ksr-block.check .ksr-tag { color: var(--gold-soft); }
+
+.ksr-block ul { margin: 0; padding-inline-start: 20px; color: var(--muted); }
+.ksr-block li { margin-bottom: 7px; line-height: 1.75; font-size: 15.5px; }
+
+/* ---- ציטוט רבינו על המאכלים ---- */
+.ksr-quote {
+  border: 1px solid rgba(224, 180, 81, .32);
+  border-radius: var(--radius);
+  background:
+    radial-gradient(120% 120% at 80% 0%, rgba(224, 180, 81, .1), transparent 60%),
+    var(--card);
+  padding: 26px 28px;
+}
+.ksr-quote .ksr-quote-intro { color: var(--gold-soft); font-size: 14.5px; margin: 0 0 12px; }
+.ksr-quote blockquote {
+  margin: 0;
+  border-inline-start: 3px solid var(--gold);
+  padding-inline-start: 18px;
+  font-size: 17px;
+  line-height: 2;
+  color: var(--text);
+}
+.ksr-quote cite {
+  display: block;
+  margin-top: 14px;
+  color: var(--muted);
+  font-style: normal;
+  font-size: 14px;
+}
+
+/* ---- קשר עם הוועד ---- */
+.ksr-contact { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 16px; }
+.ksr-contact a {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  border: 1px solid var(--line);
+  background: var(--card);
+  border-radius: 999px;
+  padding: 10px 18px;
+  font-size: 15px;
+  direction: ltr;
+}
+.ksr-contact a:hover { border-color: var(--gold); text-decoration: none; }
