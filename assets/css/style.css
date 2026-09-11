@@ -1189,8 +1189,9 @@ h1.flame-title {
   padding: 12px 14px;
   border: 1px solid var(--line);
   border-radius: 999px;
-  background: color-mix(in srgb, var(--bg) 86%, transparent);
-  backdrop-filter: blur(10px);
+  background: color-mix(in srgb, var(--bg) 95%, transparent);
+  backdrop-filter: blur(14px);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, .35);
   scroll-margin-top: 80px;
 }
 .tk-jump-label { color: var(--muted); font-size: 13.5px; padding-inline-start: 6px; }
@@ -1304,3 +1305,30 @@ h1.flame-title {
   .tk-world-clock { width: 100%; }
 }
 @media print { .tk-world { break-inside: avoid; } }
+
+/* ---- התפילות שלפני ואחרי המזמורים ---- */
+.tk-prayer .tk-num { font-size: 17px; min-width: 46px; }
+.tk-prayer .psalm-text { font-size: clamp(17.5px, 2vw, 21px); line-height: 2.05; }
+.tk-prayer .psalm-text .verse { margin: 0 0 14px; text-align: justify; }
+
+/* הוראות הדפוס — לא חלק מנוסח התפילה */
+.tk-rubric-line {
+  margin: 0 0 16px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid rgba(176, 118, 28, .3);
+  font-family: "Heebo", system-ui, sans-serif;
+  font-size: 14.5px !important;
+  color: #7a5a1e;
+  text-align: right;
+}
+.tk-rubric {
+  font-family: "Heebo", system-ui, sans-serif;
+  font-size: .74em;
+  color: #7a5a1e;
+}
+
+.tk-chip-edge {
+  background: rgba(224, 180, 81, .14);
+  border-color: rgba(224, 180, 81, .4);
+  color: var(--gold-soft);
+}
