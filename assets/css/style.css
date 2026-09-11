@@ -487,7 +487,19 @@ footer.site .na-nach { color: var(--gold); font-weight: 800; letter-spacing: .04
   .cd-box b { font-size: 24px; }
   .cd-box span { font-size: 12px; }
   .hero { padding: 40px 0 26px; }
-  nav.mainnav { width: 100%; margin-inline-start: 0; justify-content: center; }
+  nav.mainnav {
+    width: 100%;
+    margin-inline-start: 0;
+    justify-content: flex-start;
+    /* שמונה פריטים בשלוש שורות הפכו את ההדר הדביק לגובה רבע מסך.
+       שורה אחת שנגררת הצידה משאירה את הכול בהישג יד. */
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+    mask-image: linear-gradient(to left, transparent 0, #000 18px, #000 calc(100% - 18px), transparent 100%);
+  }
+  nav.mainnav::-webkit-scrollbar { display: none; }
   .card { padding: 18px; }
 }
 
@@ -857,8 +869,8 @@ body.dock-open { padding-bottom: 90px; }
    ========================================================================== */
 
 .brand-mark {
-  width: 42px;
-  height: 42px;
+  width: 48px;
+  height: 48px;
   flex: none;
   transition: opacity .3s ease, transform .3s cubic-bezier(.2, .8, .3, 1);
   transform-origin: center;
@@ -1183,7 +1195,7 @@ h1.flame-title {
 .tk-jump {
   align-items: center;
   position: sticky;
-  top: 62px;
+  top: var(--topbar-h, 62px);
   z-index: 20;
   margin: 0 0 24px;
   padding: 12px 14px;
@@ -1192,7 +1204,7 @@ h1.flame-title {
   background: color-mix(in srgb, var(--bg) 95%, transparent);
   backdrop-filter: blur(14px);
   box-shadow: 0 6px 18px rgba(0, 0, 0, .35);
-  scroll-margin-top: 80px;
+  scroll-margin-top: calc(var(--topbar-h, 62px) + 18px);
 }
 .tk-jump-label { color: var(--muted); font-size: 13.5px; padding-inline-start: 6px; }
 .tk-jump .chip { padding: 6px 13px; font-size: 15px; font-weight: 700; }
@@ -1203,7 +1215,7 @@ h1.flame-title {
   border-radius: var(--radius);
   overflow: hidden;
   margin-bottom: 22px;
-  scroll-margin-top: 130px;
+  scroll-margin-top: calc(var(--topbar-h, 62px) + 72px);
 }
 .tk-head {
   display: flex;
@@ -1246,7 +1258,7 @@ h1.flame-title {
 .tk-foot { color: var(--muted); font-size: 14.5px; margin-top: 8px; }
 
 @media (max-width: 640px) {
-  .tk-jump { border-radius: var(--radius); top: 56px; }
+  .tk-jump { border-radius: var(--radius); }
   .tk-jump-label { width: 100%; }
 }
 

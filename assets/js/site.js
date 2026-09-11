@@ -64,12 +64,30 @@ function initCountdown(elId) {
 
 /* ---- הפעלת העמוד הנוכחי ----
    נקרא בטעינה רגילה, וגם אחרי כל מעבר עמוד רך של הראוטר. */
+/* ---- גרירת התפריט אל הפריט הפעיל ----
+   בנייד התפריט הוא שורה אחת שנגררת הצידה. מחשבים את המרחק בין מרכז הפריט
+   למרכז התפריט ומזיזים בו — הפרש יחסי, ולכן זה נכון גם בימין־לשמאל וגם
+   כששני הדפדפנים חלוקים בסימן של scrollLeft. הדפדפן מגביל לטווח התקין. */
+function centerNavItem(a) {
+  var nav = a.parentElement;
+  if (!nav || nav.scrollWidth <= nav.clientWidth + 2) return;
+  var navBox = nav.getBoundingClientRect();
+  var itemBox = a.getBoundingClientRect();
+  nav.scrollLeft += (itemBox.left + itemBox.width / 2) - (navBox.left + navBox.width / 2);
+}
+
 function bootPage() {
   var page = document.body.getAttribute("data-page");
 
+  var active = null;
   document.querySelectorAll("nav.mainnav a[data-nav]").forEach(function (a) {
-    a.classList.toggle("active", a.getAttribute("data-nav") === page);
+    var on = a.getAttribute("data-nav") === page;
+    a.classList.toggle("active", on);
+    if (on) active = a;
   });
+
+  /* בנייד התפריט הוא שורה אחת שנגררת — מביאים את העמוד הנוכחי לתוך המסך */
+  if (active) centerNavItem(active);
 
   var y = document.getElementById("year");
   if (y) y.textContent = new Date().getFullYear();
@@ -89,6 +107,7 @@ function bootPage() {
   /* הנגן יושב מחוץ לתוכן העמוד — כאן הוא מתחבר למסגרת של העמוד החדש */
   if (window.MiniPlayer) window.MiniPlayer.mount();
   if (window.updateScrollState) window.updateScrollState();
+  if (window.measureTopbar) window.measureTopbar();
 }
 
 /* ---- הלוגו הגדול מתכווץ אל ההדר בזמן גלילה ---- */
@@ -110,6 +129,25 @@ function bootPage() {
 
   document.addEventListener("DOMContentLoaded", apply);
   window.updateScrollState = apply;
+})();
+
+/* ---- גובה ההדר כמשתנה CSS ----
+   ההדר גדל ומתכווץ לפי רוחב המסך ולפי מספר פריטי התפריט, ורכיבים דביקים
+   אחרים צריכים להיצמד אליו. מדידה אחת כאן חוסכת מספרים קבועים בגיליון. */
+(function () {
+  var bar = null;
+
+  function measure() {
+    bar = bar || document.querySelector(".topbar");
+    if (!bar) return;
+    var h = Math.round(bar.getBoundingClientRect().height);
+    if (h) document.documentElement.style.setProperty("--topbar-h", h + "px");
+  }
+
+  window.measureTopbar = measure;
+  document.addEventListener("DOMContentLoaded", measure);
+  window.addEventListener("resize", measure);
+  window.addEventListener("load", measure);
 })();
 
 window.bootPage = bootPage;
